@@ -1,0 +1,6 @@
+Current Schema Analysis:
+- User model: MISSING (Auth and RBAC will fail)
+- Student model: Simplified (id: Int, name: String, email: String, panel: String, facultyId: Int)
+- Faculty model: Simplified (id: Int, name: String, role: String)
+
+The existing controllers (auth, admin, student) reference the OLD complex schema (User, Division, School, Department, Admin, etc.) and will currently crash.

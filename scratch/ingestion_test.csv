@@ -1,0 +1,8 @@
+name,email,role,school,department,division,panel
+Ahsan Khan,ahsan.khan@mitwpu.edu.in,Admin,Engineering,CSE,1,A
+Poonam Bhosale,faculty1@ltc.edu,Faculty,Engineering,CSE,1,A
+Student One,student1@ltc.edu,Student,Engineering,CSE,1,A
+Student Two,student2@ltc.edu,Student,Engineering,CSE,1,B
+Student Three,student3@ltc.edu,Student,Engineering,CSE,2,A
+Shiv Sutar,faculty2@ltc.edu,Teacher,Arts,Design,1,Z
+Student Four,student4@ltc.edu,Student,Arts,Design,1,Z
