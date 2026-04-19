@@ -6,12 +6,15 @@ const path = require('path');
 
 // Routes
 const authRoutes = require('./routes/auth.routes');
+console.log('[SYSTEM] Auth routes imported');
 const adminRoutes = require('./routes/admin.routes');
+console.log('[SYSTEM] Admin routes imported');
 const facultyRoutes = require('./routes/faculty.routes');
 const studentRoutes = require('./routes/student.routes');
 const attendanceRoutes = require('./routes/attendance.routes');
 const evaluationRoutes = require('./routes/evaluation.routes');
 const superAdminRoutes = require('./routes/superAdmin.routes');
+console.log('[SYSTEM] All route modules required');
 
 // Middleware
 const errorMiddleware = require('./middleware/error.middleware');
@@ -37,6 +40,36 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // ================= ROUTES =================
 app.get('/', (req, res) => {
   res.send('API is running 🚀');
+});
+
+// Test route (to confirm /api/ prefix works)
+app.get('/api/test', (req, res) => res.send('API OK'));
+
+// Debug endpoint to list all registered routes
+app.get('/api/debug-routes', (req, res) => {
+  const routes = [];
+  app._router.stack.forEach((middleware) => {
+    if (middleware.route) {
+      routes.push(`${Object.keys(middleware.route.methods).join(',').toUpperCase()} ${middleware.route.path}`);
+    } else if (middleware.name === 'router') {
+      middleware.handle.stack.forEach((handler) => {
+        if (handler.route) {
+          const path = handler.route.path;
+          const methods = Object.keys(handler.route.methods).join(',').toUpperCase();
+          const prefix = middleware.regexp.source
+            .replace('\\/?(?=\\/|$)', '')
+            .replace('^\\', '')
+            .replace('\\/', '/');
+          routes.push(`${methods} ${prefix}${path}`);
+        }
+      });
+    }
+  });
+  res.json({
+    message: 'Active Routes',
+    timestamp: new Date(),
+    routes: routes.sort()
+  });
 });
 
 app.use('/api/auth', authRoutes);
